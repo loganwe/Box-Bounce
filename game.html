@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Game</title>
+    <title>Box Bounce</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <link href="style.css" rel="stylesheet">
   <link rel="icon" type="image" href="icon.png">
@@ -12,8 +12,8 @@
 let player;
 let myObstacles = [];
 let myScore;
-let upAcceleration=-0.25;
-let downAcceleration=0.05;
+let upAcceleration=-0.025;
+let downAcceleration=0.01;
 let gameSpeed=3;
 function startGame() {
     player = new component(30, 30, "blue", 10, 120);
@@ -30,7 +30,7 @@ let myGameArea = {
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.frameNo = 0;
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 5);
         },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -66,6 +66,7 @@ function component(width, height, color, x, y, type) {
         this.hitBottom();
         this.hitTop();
     }
+    
     this.hitBottom = function() {
         let rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
@@ -91,7 +92,7 @@ function component(width, height, color, x, y, type) {
         let othertop = otherobj.y;
         let otherbottom = otherobj.y + (otherobj.height);
         let crash = true;
-        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+        if ((mybottom < othertop) || (mytop > otherbottom ) || (myright < otherleft) || (myleft > otherright)) {
             crash = false;
         }
         return crash;
@@ -113,7 +114,7 @@ function updateGameArea() {
         maxHeight = 200;
         height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
         minGap = 190;
-        maxGap = 400;
+        maxGap = 290;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
         myObstacles.push(new component(10, height, "red", x, 0));
         myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
@@ -136,7 +137,13 @@ function everyinterval(n) {
 function accelerate(n) {
     player.gravity = n;
  }
- document.addEventListener("mousedown",event=>{
+ document.addEventListener("keydown",event=>{
+    accelerate(upAcceleration);
+ })
+ document.addEventListener("keyup",event=>{
+    accelerate(downAcceleration);
+ })
+  document.addEventListener("mousedown",event=>{
     accelerate(upAcceleration);
  })
  document.addEventListener("mouseup",event=>{
@@ -145,6 +152,7 @@ function accelerate(n) {
 </script>
 
 <br>
-<!-- <button onmousedown="accelerate(-0.25)" onmouseup="accelerate(0.05)">ACCELERATE</button> -->
+<button onclick="document.location.reload()">reset</button>
+<!-- <button onclick="player.gravity*=-1"; upAcceleration*=-1>Flip Gravity</button> -->
 </body>
 </html>
