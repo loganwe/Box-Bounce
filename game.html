@@ -19,11 +19,12 @@ let gameSpeed=6;
 let theme = new Audio('Theme.mp3');
 let end=new Audio('End Game.mp3')
 let mState=1;
-let Bounce=1;
+let Bounce=200;
+let gState=1;
 function startGame() {
     
-    player = new component(15, 12, "green", 10, 120);
-    player.gravity = -5;
+    player = new component(15, 12, "green", 10, 0);
+    player.gravity = 0;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
@@ -78,7 +79,7 @@ function component(width, height, color, x, y, type) {
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = -Bounce;
-            return true;
+            return;
             
         }
     }
@@ -112,11 +113,12 @@ function updateGameArea() {
         theme.play()
     }
     for (i = 0; i < myObstacles.length; i += 1) {
-        if (player.crashWith(myObstacles[i])||player.hitBottom()) {
+     if(gState==1){  
+         if (player.crashWith(myObstacles[i])||player.hitBottom()) {
             theme.pause()
-            end.play()
             return;
         } 
+    }
     }
     myGameArea.clear();
     myGameArea.frameNo += 1;
@@ -145,31 +147,38 @@ function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+function accelerate(n) {  player.gravity = -n;}
+document.addEventListener("keydown",event=>{
+   if(event.key==="ArrowDown")
+   accelerate(upAcceleration);
+   else if(event.key=="ArrowUp")
+   accelerate(downAcceleration)
+})
+document.addEventListener("keypress",event=>{
+   if(event.key=="A"){
+       if(gState==1){
+       gState--;
+       }else {
+           gState++
+       }
+   }else if(event.key=="m")
+   Toggle()
+})
+   let Toggle=()=>{
+if(mState===1){
+   theme.play()
+   mState--
+}else{
+   theme.pause()
+   mState++
+}
+}
 
-function accelerate(n) {
-    player.gravity = -n;
- }
- document.addEventListener("keydown",event=>{
-    accelerate(upAcceleration);
- })
- document.addEventListener("keyup",event=>{
-    accelerate(downAcceleration);
- })
-    let Toggle=()=>{
- if(mState===1){
-    theme.play()
-    mState--
- }else{
-    theme.pause()
-    mState++
- }
- }
- 
 </script>
-
 <br>
-<button onclick="document.location.reload()">reset</button>
-<button onclick="Toggle()">Toggle Music</button>
-<!-- <audio src="Choir Project 22-23 (2).mp3" autoplay loop></audio> -->
+<button onclick="document.location.reload()">Reset</button>
+<button onclick="Toggle()">Toggle Music</button><br>
+<h3>Music by Justice Goodwin</h3>
+<!-- <audio src="Theme.mp3" autoplay loop></audio> -->
 </body>
 </html>

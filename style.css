@@ -1,7 +1,8 @@
-/*canvas {
-    /* border:1px solid #d3d3d3; 
+canvas {
+    border-bottom:5px solid darkblue; 
+    border-top: 5px solid darkblue;
     background-color: lightcyan;
-}*/
+}
 body{
     text-align: center;
     background-color: lightcyan;
