@@ -23,7 +23,7 @@ let Bounce=5;
 let gState=1;
 function startGame() {
     
-    player = new component(15, 12, "green", 10, 0);
+    player = new component(15, 12, "darkblue", 10, 0);
     player.gravity = 0;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
@@ -130,14 +130,14 @@ function updateGameArea() {
         minGap = 100;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "blue", x, 0));
+        myObstacles.push(new component(10, height, "orange", x, 0));
         myObstacles.push(new component(10, x - height - gap, "black", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -distance_between_enemies;
         myObstacles[i].update();
     }
-    myScore.text="SCORE: " + myGameArea.frameNo;
+    myScore.text="SCORE: " + Math.floor( myGameArea.frameNo/1000);
     myScore.update();
     player.newPos();
     player.update();
@@ -155,7 +155,7 @@ document.addEventListener("keydown",event=>{
    accelerate(downAcceleration)
 })
 document.addEventListener("keypress",event=>{
-   if(event.key=="A"){
+   if(event.key=="C"){
        if(gState==1){
        gState--;
        }else {
@@ -182,6 +182,6 @@ if(mState===1){
 <button onclick="Toggle()">Toggle Music</button><br>
 <h3>Music by Justice Goodwin</h3>
 <!-- <audio src="Theme.mp3" autoplay loop></audio> -->
-<h3>Version:9.0</h3>
+<h3>Version:10.0</h3>
 </body>
 </html>
