@@ -12,8 +12,8 @@
 let player;
 let myObstacles = [];
 let myScore;
-let upAcceleration=-0.05;
-let downAcceleration=0.05;
+let upAcceleration=-5;
+let downAcceleration=5;
 let distance_between_enemies =0.75;
 let gameSpeed=6;
 let theme = new Audio('Theme.mp3');
@@ -156,11 +156,11 @@ document.addEventListener("keydown",event=>{
 })
 document.addEventListener("keypress",event=>{
    if(event.key=="Enter"){
-       if(gState==1){
+       /*if(gState==1){
        gState--;
        }else {
            gState++
-       }
+       }*/
    }else if(event.key=="m")
    Toggle()
    else if(event.key==" ")
