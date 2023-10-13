@@ -12,19 +12,19 @@
 let player;
 let myObstacles = [];
 let myScore;
-let upAcceleration=-0.0005;
-let downAcceleration=0.0005;
+let upAcceleration=-0.025;
+let downAcceleration=0.025;
 let distance_between_enemies =0.75;
-let gameSpeed=6000000000000;
+let gameSpeed=6;
 let theme = new Audio('Theme.mp3');
 let end=new Audio('End Game.mp3')
 let mState=1;
-let Bounce=0;
+let Bounce=2;
 let gState=1;
 function startGame() {
     
     player = new component(15, 12, "darkblue", 10, 0);
-    player.gravity = -7;
+    player.gravity = 0;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
 }
@@ -127,8 +127,8 @@ function updateGameArea() {
         minHeight = 20;
         maxHeight = 200;
         height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-        minGap = 100;
-        maxGap = 200;
+        minGap = 50;
+        maxGap = 100;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
         myObstacles.push(new component(10, height, "black", x, 0));
         myObstacles.push(new component(10, x - height - gap, "black", x, height + gap));
@@ -137,7 +137,7 @@ function updateGameArea() {
         myObstacles[i].x += -distance_between_enemies;
         myObstacles[i].update();
     }
-    myScore.text="SCORE: " + Math.floor( myGameArea.frameNo/1000);
+    myScore.text="SCORE: " + Math.floor( myGameArea.frameNo/100);
     myScore.update();
     player.newPos();
     player.update();
@@ -155,7 +155,7 @@ document.addEventListener("keydown",event=>{
    accelerate(downAcceleration)
 })
 document.addEventListener("keypress",event=>{
-   if(event.key=="Enter"){
+   if(event.key=="|"){
        if(gState==1){
        gState--;
        }else {
@@ -163,7 +163,7 @@ document.addEventListener("keypress",event=>{
        }
    }else if(event.key=="m")
    Toggle()
-   else if(event.key==" ")
+   else if (event.key==" ")
    document.location.reload()
 })
    let Toggle=()=>{
@@ -182,6 +182,6 @@ if(mState===1){
 <button onclick="Toggle()">Toggle Music</button><br>
 <h3>Music by Justice Goodwin</h3>
 <!-- <audio src="Theme.mp3" autoplay loop></audio> -->
-<h3>Version:11.0</h3>
+<h3>Version:8.0</h3>
 </body>
 </html>
