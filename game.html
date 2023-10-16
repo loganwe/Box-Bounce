@@ -20,12 +20,15 @@ let theme = new Audio('Theme.mp3');
 let end=new Audio('End Game.mp3')
 let mState=1;
 let Bounce=2;
+let scoreDcontroller=100;
 let gState=1;
+// let gameOver;
 function startGame() {
     
     player = new component(15, 12, "darkblue", 10, 0);
     player.gravity = 0;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
+    // gameOver= new component("30px", "Consolas", "red", 280, 70, "text");
     myGameArea.start();
 }
 
@@ -79,9 +82,10 @@ function component(width, height, color, x, y, type) {
         if (this.y > rockbottom) {
             this.y = rockbottom;
             this.gravitySpeed = -Bounce;
-            return;
+            return true;
             
-        }
+        }else
+        return false;
     }
     this.hitTop = function() {
         let TOP = myGameArea.canvas.height +this.height;
@@ -116,6 +120,7 @@ function updateGameArea() {
      if(gState==1){  
          if (player.crashWith(myObstacles[i])||player.hitBottom()) {
             theme.pause()
+            gameOver.text="Game Over"
             return;
         } 
     }
@@ -137,10 +142,11 @@ function updateGameArea() {
         myObstacles[i].x += -distance_between_enemies;
         myObstacles[i].update();
     }
-    myScore.text="SCORE: " + Math.floor( myGameArea.frameNo/100);
+    myScore.text="SCORE: " + Math.floor( myGameArea.frameNo/scoreDcontroller);
     myScore.update();
     player.newPos();
     player.update();
+    // gameOver.update()
 }
 
 function everyinterval(n) {
@@ -153,6 +159,10 @@ document.addEventListener("keydown",event=>{
    accelerate(upAcceleration);
    else if(event.key=="ArrowUp")
    accelerate(downAcceleration)
+   else if(event.key=="s")
+   scoreDcontroller/=10
+   else if(event.key=="a")
+   scoreDcontroller*=10
 })
 document.addEventListener("keypress",event=>{
    if(event.key=="|"){
@@ -182,6 +192,7 @@ if(mState===1){
 <button onclick="Toggle()">Toggle Music</button><br>
 <h3>Music by Justice Goodwin</h3>
 <!-- <audio src="Theme.mp3" autoplay loop></audio> -->
-<h3>Version:8.0</h3>
+<h3>Version:17.0</h3>
 </body>
 </html>
+
