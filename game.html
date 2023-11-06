@@ -25,8 +25,8 @@ let end=new Audio('End Game.mp3')
 let mState=1;
 let Bounce=2;
 let scoreDcontroller=100;
+let gravity=-7;
 let gState=1;
-let gravity=-7
 let notaccelerateing=true
 // let gameOver;
 function startGame() {
@@ -82,6 +82,7 @@ function component(width, height, color, x, y, type) {
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
         this.hitTop();
+        // this.gravity=0
     }
     
     this.hitBottom = function() {
@@ -127,6 +128,12 @@ function updateGameArea() {
      if(gState==1){  
          if (player.crashWith(myObstacles[i])||player.hitBottom()) {
             theme.pause()
+    myGameArea.canvas.remove()
+    // document.getElementsByClassName("end").
+         document.getElementById("go").innerHTML="YOU LOSE"
+         setTimeout(()=>{
+            document.close()
+         },1000)
             // gameOver.text="Game Over"
             return;
         } 
@@ -144,15 +151,15 @@ function updateGameArea() {
         minGap = 150;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "black", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "black", x, height + gap));
+        myObstacles.push(new component(10, height, "red", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "red", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -distance_between_enemies;
         myObstacles[i].update();
     }
 if(myGameArea.frameNo===1300||myGameArea.frameNo===2000||myGameArea.frameNo===2500||myGameArea.frameNo===3000||myGameArea.frameNo===4000){
-    distance_between_enemies-=0.08
+    distance_between_enemies-=0.15
     level+=1
 }else if(myGameArea.frameNo===4500||wSate){
     myGameArea.canvas.remove()
@@ -175,14 +182,18 @@ function everyinterval(n) {
 }
 function accelerate(n) {  player.gravity = -n;notaccelerateing=false}
 document.addEventListener("keydown",event=>{
-   if(event.key==="ArrowDown")
+   /*if(event.key==="ArrowDown")
    accelerate(upAcceleration);
-   else if(event.key=="ArrowUp")
-   accelerate(downAcceleration)
+   else*/ if(event.key=="ArrowDown")
+   accelerate(upAcceleration)
    else if(event.key=="s")
    scoreDcontroller/=10
    else if(event.key=="a")
    scoreDcontroller*=10
+})
+document.addEventListener("keyup",event=>{
+    if(event.key=="ArrowDown")
+    accelerate(downAcceleration)
 })
 document.addEventListener("keypress",event=>{
    if(event.key=="|"){
@@ -197,6 +208,8 @@ document.addEventListener("keypress",event=>{
    document.location.reload()
    else if(event.key==="W")
    wSate=true
+else if(event=="c")
+document.close()
 })
    let Toggle=()=>{
 if(mState===1){
@@ -219,4 +232,3 @@ if(mState===1){
 <h1 id="go"></h1>
 </body>
 </html>
-
