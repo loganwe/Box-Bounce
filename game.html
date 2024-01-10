@@ -151,8 +151,8 @@ function updateGameArea() {
         minGap = 150;
         maxGap = 200;
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-        myObstacles.push(new component(10, height, "red", x, 0));
-        myObstacles.push(new component(10, x - height - gap, "red", x, height + gap));
+        myObstacles.push(new component(10, height, "blue", x, 0));
+        myObstacles.push(new component(10, x - height - gap, "blue", x, height + gap));
     }
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x += -distance_between_enemies;

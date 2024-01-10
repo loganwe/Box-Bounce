@@ -1,9 +1,9 @@
 canvas {
-    border-bottom:5px solid red; 
-    border-top: 5px solid red;
-    background-color: green;
+    border-bottom:5px solid blue; 
+    border-top: 5px solid blue;
+    background-color: lightblue;
 }
 body{
     text-align: center;
-    background-color: green;
+    background-color: lightblue;
 }
